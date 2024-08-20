@@ -4,7 +4,9 @@ This repository contains a complete implementation of a Retrieval-Augmented Gene
 # Key Technologies:
 
 •	**FastAPI**: A modern, fast (high-performance), web framework for building APIs with Python 3.7+ based on standard Python type hints.
+
 •	**OpenAI**: A powerful AI model API for natural language processing, enabling advanced text generation and comprehension capabilities.
+
 •	**PostgreSQL**: An open-source relational database system used for storing and managing application data.
 
 # Project Tasks
