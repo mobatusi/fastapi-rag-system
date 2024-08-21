@@ -6,6 +6,7 @@ from pgvector.sqlalchemy import Vector
 from dotenv import load_dotenv
 import urllib
 import os
+from sqlalchemy.orm import Session
 
 # Load environment variables from .env file
 load_dotenv()
@@ -29,6 +30,13 @@ if not database_exists(engine.url):
 
 # Session local
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 # Define models
 Base = declarative_base()

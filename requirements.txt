@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+sqlalchemy
+python-dotenv
+nltk
+sqlalchemy-utils
+pytesseract
+PyPDF2
+Pillow
+PyMuPDF
+openai
+shutil
