@@ -46,7 +46,4 @@ async def ask_question(data: AskQuestionModel):
                 }
             ]
         )
-        answer = completion.choices[0].message.content
-        return {"answer": answer}
-    except Exception as e:
-        return {"message": e.args}
+     
