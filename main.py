@@ -45,4 +45,23 @@ async def uploadfile(file: UploadFile = File(...)):
         
         return {"info": "File saved", "filename": file.filename}
     except Exception as e:
-        return {"messa
+        return {"message": e.args}
+        
+
+@app.post("/ask/")
+async def ask_question(data: AskQuestionModel):
+    try:
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {
+                    "role": "user",
+                    "content": data.question
+                }
+            ]
+        )
+        answer = completion.choices[0].message.content
+        return {"answer": answer}
+    except Exception as e:
+        return {"message": e.args}
