@@ -1,9 +1,17 @@
-from fastapi import FastAPI, UploadFile
+from fastapi import FastAPI, UploadFile, File
+from pydantic import BaseModel
 import os
-import openai
+from openai import OpenAI
+
 
 app = FastAPI()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+client = OpenAI()
+
+# Get the OpenAI API key from environment variables
+# openai.api_key = os.getenv("OPENAI_API_KEY")
+
+class AskQuestionModel(BaseModel):
+    question: str
 
 @app.get("/")
 def read_root():
@@ -26,17 +34,19 @@ async def uploadfile(file: UploadFile):
         
 
 @app.post("/ask/")
-async def ask_question(question: str):
+async def ask_question(data: AskQuestionModel):
     try:
-        response = openai.Completion.create(
-            engine="davinci-codex",
-            prompt=question,
-            max_tokens=100,
-            n=1,
-            stop=None,
-            temperature=0.7,
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "You are a helpful assistant."},
+                {
+                    "role": "user",
+                    "content": data.question
+                }
+            ]
         )
-        answer = response.choices[0].text.strip()
+        answer = completion.choices[0].message.content
         return {"answer": answer}
     except Exception as e:
         return {"message": e.args}
