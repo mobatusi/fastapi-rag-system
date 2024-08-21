@@ -9,71 +9,35 @@ This repository contains a complete implementation of a Retrieval-Augmented Gene
 
 •	**PostgreSQL**: An open-source relational database system used for storing and managing application data.
 
-# Project Tasks
+## Directory Structure
 
-1. Introduction
+### Files
 
-- Task 0: Getting Started
+- **main.py**: The entry point of the FastAPI application. It contains the API endpoints and the main logic for handling requests and responses.
 
-	•	Set up your development environment.
-	•	Install necessary dependencies and libraries.
+- **db.py**: Contains the database configuration and setup using SQLAlchemy. It includes the database engine, session, and base model.
 
-2. Building the API with FastAPI
+- **file_parser.py**: Implements a PDF document parser, and also handles PDFs containing images using optical character recognition (OCR).
 
-- Task 1: Create Basic API Endpoints
+- **file_parser_tests.py**: Test the implementation of PDF parser in file_parser.py.
 
-	•	Define and implement basic API endpoints using FastAPI.
-	•	Ensure that your endpoints follow best practices for API design.
+- **background_tasks.py**: Used to run background tasks for chunking text into sentences, generating embeddings, and storing these in the database.
 
-- Task 2: Integrate OpenAI’s API
+- **requirements.txt**: Lists all the dependencies required for the project. These can be installed using `pip install -r requirements.txt`.
 
-	•	Set up the integration with OpenAI’s API.
-	•	Implement functionality to interact with OpenAI’s models.
+- **.env**: Environment variables file that contains sensitive information such as database credentials. This file should not be committed to version control.
 
-- Task 3: Write the Testing Script
-
-	•	Develop a script to test your API endpoints.
-	•	Ensure your API behaves as expected under various conditions.
-
-3. Managing and Parsing Documents
-
-- Task 4: Improve the Document Upload
-
-	•	Enhance the document upload functionality to support multiple file types.
-
-- Task 5: Parse Text Documents
-
-	•	Implement functionality to parse and process text documents.
-
-- Task 6: Parse PDF Documents with OCR
-
-	•	Integrate Optical Character Recognition (OCR) to parse text from PDF documents.
-
-4. Database Integration and Management
-
-- Task 7: Create and Test the Database
-
-	•	Design and implement the database schema.
-	•	Test the database setup to ensure data integrity and performance.
-
-- Task 8: Implement Background Tasks
-
-	•	Set up background tasks for processing and handling long-running operations.
-
-- Task 9: Integrate the Database with the FastAPI Application
-
-	•	Connect your FastAPI application with the database.
-	•	Ensure seamless data retrieval and manipulation within the application.
-
-- Task 10: Test the FastAPI Application
-
-	•	Perform comprehensive testing of the FastAPI application.
-	•	Verify that all components work together as intended and handle edge cases gracefully.
+- **api_test.sh**: A script to test the API endpoints. It sequentially:
+	- Uploads a test file to populate the database.
+	- Queries the root endpoint to list available files.
+  	- Waits 30 seconds to allow background tasks to process the uploaded file.
+  	- Tests the `/ask/` endpoint by submitting a question related to the content of the uploaded file.
+  	- Tests the `/find-similar-chunks/{file_id}` endpoint to retrieve chunks similar to a provided question.
 
 # Getting Started
 1.	Clone the Repository
 ``` 
-git clone https://github.com/yourusername/fastapi-rag-system.git
+git clone https://github.com/mobatusi/fastapi-rag-system.git
 cd fastapi-rag-system 
 ```
 2.	Install Dependencies
@@ -88,9 +52,6 @@ uvicorn main:app --reload
 ```
 5.	Access the API
 	•	Open your browser and navigate to http://localhost:8000/docs to view the interactive API documentation.
-# Contributing
-
-If you’d like to contribute to this project, please fork the repository and submit a pull request with your proposed changes. Be sure to follow the project’s coding standards and include appropriate tests.
 
 # License
 
